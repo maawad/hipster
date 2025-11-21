@@ -2,7 +2,7 @@
     "name": "hipster",
     "displayName": "Hipster",
     "description": "🔥 Navigate HIP GPU assembly with bidirectional source-assembly highlighting and powerful inspection tools",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "TinkerCode",
     "icon": "resources/icon.png",
     "engines": {
