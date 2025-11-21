@@ -1,0 +1,65 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # This allows manual triggering of the workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Compile TypeScript
+      run: npm run compile
+
+    - name: Run linter
+      run: npm run lint
+
+    - name: Bump version for dev release
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        # Get short commit SHA and date for unique dev version
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        DATE=$(date +%Y%m%d)
+        CURRENT_VERSION=$(node -p "require('./package.json').version.split('-')[0]")
+        DEV_VERSION="${CURRENT_VERSION}-dev.${DATE}.${COMMIT_SHA}"
+
+        # Update package.json version
+        node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json')); pkg.version = '$DEV_VERSION'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');"
+
+        echo "Bumped version to $DEV_VERSION for dev release"
+
+    - name: Package extension
+      run: npx @vscode/vsce package
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: hipster-vsix
+        path: "*.vsix"
+        retention-days: 90  # Keep artifacts for 90 days
+
+    - name: Publish to Open VSX
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(github.event.head_commit.message, '[publish]')
+      run: |
+        npm install -g ovsx
+        ovsx publish *.vsix --pat ${{ secrets.OPEN_VSX_SECRET }} || echo "Publish failed or version already exists"
+
+
