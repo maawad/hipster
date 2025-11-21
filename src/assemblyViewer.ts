@@ -1207,7 +1207,7 @@ export class AssemblyViewerPanel {
         const currentIndex = this._matches.findIndex(m => m === this._selectedMatch);
 
         // Find all matches with the same kernel symbol but different build directories
-        let compatibleMatches = this._matches
+        const compatibleMatches = this._matches
             .map((match, index) => ({ match, index }))
             .filter(({ match, index }) =>
                 match.kernelSymbol === currentKernelSymbol &&
