@@ -1,21 +1,45 @@
-# Hipster 🔥
+<h1 align="center">🔥 Hipster 🔥</h1>
 
-Navigate HIP GPU assembly with bidirectional source-assembly highlighting and powerful inspection tools.
+<p align="center">
+  <a href="https://github.com/maawad/hipster/actions/workflows/main.yml">
+    <img src="https://github.com/maawad/hipster/actions/workflows/main.yml/badge.svg" alt="CI Status">
+  </a>
+  <a href="https://github.com/maawad/hipster/actions/workflows/main.yml">
+    <img src="https://img.shields.io/badge/Download-Latest%20VSIX-blue?style=flat-square" alt="Download VSIX">
+  </a>
+  <a href="https://open-vsx.org/extension/TinkerCode/hipster">
+    <img src="https://img.shields.io/open-vsx/v/TinkerCode/hipster?label=Open%20VSX&style=flat-square" alt="Open VSX">
+  </a>
+</p>
 
-## Features
+<p align="center">
+  <img src="resources/icon.png" alt="Hipster Icon" width="128" height="128">
+</p>
 
-- **Bidirectional Highlighting**: Click on source code to highlight corresponding assembly, or click on assembly to jump to source
-- **Smart Assembly Discovery**: Automatically finds assembly files in your build directory
-- **Multi-Kernel Support**: Handles multiple kernels and template instantiations
-- **File & Kernel Selection**: Searchable dropdowns to navigate between files and kernels
-- **Debug Info Parsing**: Parses GCN assembly `.loc` and `.file` directives for accurate line mapping
+<p align="center">
+  <strong>Navigate HIP GPU assembly with bidirectional source-assembly highlighting and powerful inspection tools.</strong>
+</p>
 
-## Requirements
+## 📦 Installation
 
-- Your HIP project must be compiled with debug information (`-g` flag)
-- Assembly files must be generated in the build directory (typically with `-save-temps`)
+### Download Latest Version
 
-## Usage
+[![Download VSIX](https://img.shields.io/badge/Download-Latest%20VSIX-blue?style=for-the-badge)](https://github.com/maawad/hipster/actions/workflows/main.yml)
+
+1. Go to [Actions](https://github.com/maawad/hipster/actions)
+2. Click on the latest successful workflow run
+3. Scroll to "Artifacts" and download `hipster-vsix`
+4. Extract the `.vsix` file from the zip
+5. In VS Code: `Extensions` → `...` → `Install from VSIX`
+6. Select the downloaded `.vsix` file
+
+### From Open VSX
+
+[![Open VSX Version](https://img.shields.io/open-vsx/v/TinkerCode/hipster?label=Open%20VSX&style=for-the-badge)](https://open-vsx.org/extension/TinkerCode/hipster)
+
+Visit [Open VSX](https://open-vsx.org/extension/TinkerCode/hipster) to download the `.vsix` file.
+
+## 🚀 Quick Start
 
 1. Build your HIP project with debug info:
    ```bash
@@ -23,37 +47,46 @@ Navigate HIP GPU assembly with bidirectional source-assembly highlighting and po
    make
    ```
 
-2. Open a `.hip`, `.cu`, or `.cpp` file in VS Code
+2. Open a HIP/C++ source file (`.hip`, `.cu`, `.cpp`, `.h`)
+3. Right-click → `Hipster: View Assembly` or click the chip icon in the toolbar
+4. Click source lines to highlight assembly, click assembly to jump to source
 
-3. Click the chip icon (🔧) in the editor toolbar, or use the command palette:
-   - `Hipster: View Assembly`
+## ✨ Features
 
-4. The assembly viewer opens side-by-side with your source code
+- **Bidirectional Highlighting**: Click source ↔ assembly to navigate
+- **Assembly Viewer**: Side-by-side view with GCN syntax highlighting
+- **Advanced Filtering**: Hide directives, comments, filter by instruction type
+- **In-Webview Search**: Press `Ctrl+F` to search assembly
+- **Version Comparison**: Compare different kernel versions side-by-side
+- **Multi-Build Support**: Scans multiple build directories with version tracking
+- **Smart Discovery**: Auto-detects assembly files with debug info
 
-5. Click on any line in your source to highlight the corresponding assembly
+## ⚙️ Configuration
 
-6. Click on any assembly instruction to jump to the source line
+Set custom build directories in VS Code settings:
 
-## Configuration
+```json
+{
+  "hipster.buildDirectories": ["build", "build-debug", "build-release"]
+}
+```
 
-- `hipster.buildDirectory`: Build directory name to search for assembly files (default: `build`)
+Default: `["build"]`
 
-## How It Works
+## 🔧 Development
 
-Hipster scans your build directory for GCN assembly files (`*-hip-amdgcn-amd-amdhsa-*.s`) and parses the debug information to create bidirectional mappings between source code and assembly instructions.
+```bash
+npm install
+npm run compile
+npm run lint
+```
 
-## Supported File Types
+Press `F5` in VS Code to debug.
 
-- `.hip` (HIP)
-- `.cu` (CUDA)
-- `.cpp`, `.hpp`, `.h` (C++)
+## 📝 License
 
-## Known Limitations
+MIT License - see [LICENSE](LICENSE) for details.
 
-- Requires debug information in assembly files
-- Only supports GCN assembly format (AMD GPUs)
+---
 
-## License
-
-MIT
-
+**Made with 🔥 for HIP kernel developers**
