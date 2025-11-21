@@ -434,13 +434,37 @@ export class AssemblyViewerPanel {
         }
         select {
             flex: 1;
-            padding: 5px;
+            padding: 5px 8px;
             background-color: var(--vscode-dropdown-background);
             color: var(--vscode-dropdown-foreground);
             border: 1px solid var(--vscode-dropdown-border);
+            border-radius: 2px;
             font-family: inherit;
             font-size: 12px;
+            height: 32px;
         }
+
+        select:hover {
+            background-color: var(--vscode-dropdown-listBackground);
+        }
+
+        select:focus {
+            outline: 1px solid var(--vscode-focusBorder);
+            outline-offset: -1px;
+        }
+
+        /* Style dropdown options (important for Windows) */
+        select option {
+            background-color: var(--vscode-dropdown-background) !important;
+            color: var(--vscode-dropdown-foreground) !important;
+        }
+
+        select option:hover,
+        select option:checked {
+            background-color: var(--vscode-list-activeSelectionBackground) !important;
+            color: var(--vscode-list-activeSelectionForeground) !important;
+        }
+
         #kernelSelect, #fileSelect {
             max-width: 250px;
             text-overflow: ellipsis;
